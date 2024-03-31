@@ -1,4 +1,5 @@
 import { outLogin } from '@/services/ant-design-pro/api';
+import { userLogoutUsingPost } from '@/services/linksauce-backend/userController';
 import { LogoutOutlined, SettingOutlined, UserOutlined } from '@ant-design/icons';
 import { history, useModel } from '@umijs/max';
 import { Spin } from 'antd';
@@ -69,7 +70,7 @@ export const AvatarDropdown: React.FC<GlobalHeaderRightProps> = ({ menu, childre
         flushSync(() => {
           setInitialState((s) => ({ ...s, currentUser: undefined }));
         });
-        loginOut();
+        userLogoutUsingPost();
         return;
       }
       history.push(`/account/${key}`);
