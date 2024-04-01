@@ -17,7 +17,7 @@ import org.springframework.stereotype.Service;
 */
 @Service
 public class InterfaceInfoServiceImpl extends ServiceImpl<InterfaceInfoMapper, InterfaceInfo>
-    implements InterfaceInfoService {
+        implements InterfaceInfoService {
 
     @Override
     public void validInterfaceInfo(InterfaceInfo interfaceInfo, boolean add) {
@@ -30,26 +30,24 @@ public class InterfaceInfoServiceImpl extends ServiceImpl<InterfaceInfoMapper, I
         String url = interfaceInfo.getUrl();
         String requestHeader = interfaceInfo.getRequestHeader();
         String responseHeader = interfaceInfo.getResponseHeader();
-        Integer status = interfaceInfo.getStatus();
+        // Integer status = interfaceInfo.getStatus();
         String method = interfaceInfo.getMethod();
-        Long userId = interfaceInfo.getUserId();
+        // Long userId = interfaceInfo.getUserId();
 
         // 创建时，所有参数必须非空
         if (add) {
-            if (StringUtils.isAnyBlank(name, description, url, requestHeader, responseHeader, method) || ObjectUtils.anyNull(userId, status)) {
+            if (StringUtils.isAnyBlank(name, description, url, requestHeader, responseHeader, method)) {
                 throw new BusinessException(ErrorCode.PARAMS_ERROR);
             }
         }
         if (StringUtils.isNotBlank(name) && name.length() > 256) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR, "名字过长");
         }
-        if (StringUtils.isNotBlank(description) && description.length() > 512) {
+        if (StringUtils.isNotBlank(name) && name.length() > 512) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR, "描述过长");
         }
     }
 
 }
-
-
 
 

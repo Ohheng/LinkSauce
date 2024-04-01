@@ -1,10 +1,10 @@
-import { AvatarDropdown, AvatarName, Footer, Question } from '@/components';
-import { getLoginUserUsingGet } from '@/services/linksauce-backend/userController';
-import { LinkOutlined } from '@ant-design/icons';
-import { SettingDrawer } from '@ant-design/pro-components';
-import type { RunTimeLayoutConfig } from '@umijs/max';
-import { Link, history } from '@umijs/max';
-import { requestConfig } from './requestConfig';
+import {AvatarDropdown, AvatarName, Footer, Question} from '@/components';
+import {getLoginUserUsingGet} from '@/services/linksauce-backend/userController';
+import {LinkOutlined} from '@ant-design/icons';
+import {SettingDrawer} from '@ant-design/pro-components';
+import type {RunTimeLayoutConfig} from '@umijs/max';
+import {Link, history} from '@umijs/max';
+import {requestConfig} from './requestConfig';
 
 const isDev = process.env.NODE_ENV === 'development';
 const loginPath = '/user/login';
@@ -29,12 +29,12 @@ export async function getInitialState(): Promise<InitialState> {
 }
 
 // ProLayout 支持的api https://procomponents.ant.design/components/layout
-export const layout: RunTimeLayoutConfig = ({ initialState, setInitialState }) => {
+export const layout: RunTimeLayoutConfig = ({initialState, setInitialState}) => {
   return {
-    actionsRender: () => [<Question key="doc" />],
+    actionsRender: () => [<Question key="doc"/>],
     avatarProps: {
       src: initialState?.currentUser?.avatar,
-      title: <AvatarName />,
+      title: <AvatarName/>,
       render: (_, avatarChildren) => {
         return <AvatarDropdown>{avatarChildren}</AvatarDropdown>;
       },
@@ -42,9 +42,9 @@ export const layout: RunTimeLayoutConfig = ({ initialState, setInitialState }) =
     waterMarkProps: {
       content: initialState?.loginUser?.userName,
     },
-    footerRender: () => <Footer />,
+    footerRender: () => <Footer/>,
     onPageChange: () => {
-      const { location } = history;
+      const {location} = history;
       // 如果没有登录，重定向到 login
       if (!initialState?.loginUser && location.pathname !== loginPath) {
         history.push(loginPath);
@@ -72,11 +72,11 @@ export const layout: RunTimeLayoutConfig = ({ initialState, setInitialState }) =
     ],
     links: isDev
       ? [
-          <Link key="openapi" to="/umi/plugin/openapi" target="_blank">
-            <LinkOutlined />
-            <span>OpenAPI 文档</span>
-          </Link>,
-        ]
+        <Link key="openapi" to="/umi/plugin/openapi" target="_blank">
+          <LinkOutlined/>
+          <span>OpenAPI 文档</span>
+        </Link>,
+      ]
       : [],
     menuHeaderRender: undefined,
     // 自定义 403 页面
