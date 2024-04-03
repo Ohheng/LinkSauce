@@ -1,4 +1,4 @@
-package com.ohh.linksauceinterface.utils;
+package com.linksauce.linksauceclientsdk.utils;
 
 import cn.hutool.crypto.digest.DigestAlgorithm;
 import cn.hutool.crypto.digest.Digester;

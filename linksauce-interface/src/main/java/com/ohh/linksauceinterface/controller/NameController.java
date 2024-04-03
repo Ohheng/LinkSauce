@@ -1,10 +1,15 @@
 package com.ohh.linksauceinterface.controller;
 
-import com.ohh.linksauceinterface.modal.User;
-import com.ohh.linksauceinterface.utils.SignUtils;
+import cn.hutool.core.util.NumberUtil;
+import cn.hutool.core.util.StrUtil;
+import com.linksauce.linksauceclientsdk.model.User;
+import com.linksauce.linksauceclientsdk.utils.SignUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 
 /**
  * 名称API
@@ -24,31 +29,35 @@ public class NameController {
     }
 
     @PostMapping("/user")
-    public String getUsernameByPost(@RequestBody User user, HttpServletRequest request) {
+    public String getUsernameByPost(@RequestBody User user, HttpServletRequest request) throws UnsupportedEncodingException {
         String accessKey = request.getHeader("accessKey");
+        // 防止中文乱码
+        String body = URLDecoder.decode(request.getHeader("body"), StandardCharsets.UTF_8.name());
+        String sign = request.getHeader("sign");
         String nonce = request.getHeader("nonce");
         String timestamp = request.getHeader("timestamp");
-        String sign = request.getHeader("sign");
-        String body = request.getHeader("body");
-        // todo 实际开发应去数据库中查看是否已分配给用户
-        if (!accessKey.equals("ohh")) {
-            throw new RuntimeException("无权限访问");
+        boolean hasBlank = StrUtil.hasBlank(accessKey, body, sign, nonce, timestamp);
+        // 判断是否有空
+        if (hasBlank) {
+            return "无权限";
         }
-        if (Long.parseLong(nonce) > 10000) {
-            throw new RuntimeException("无权限访问");
+        // TODO 使用accessKey去数据库查询secretKey
+        // 假设查到的secret是abc 进行加密得到sign
+        String secretKey = "abcdefgh";
+        String sign1 = SignUtils.genSign(body, secretKey);
+        if (!StrUtil.equals(sign, sign1)) {
+            return "无权限";
         }
-        // todo 时间和当前时间不能超过5分钟
-        // if (timestamp){
-        //
-        // }
-
-        // todo 实际情况是从数据库中查secretKey
-        String serverSign = SignUtils.genSign(body, "abcdefgh");
-        if (!sign.equals(serverSign)) {
-            throw new RuntimeException("签名错误");
+        // TODO 判断随机数nonce
+        // 时间戳是否为数字
+        if (!NumberUtil.isNumber(timestamp)) {
+            return "无权限";
         }
-
-        return "POST 你的用户名是" + user.getUsername();
+        // 五分钟内的请求有效
+        if (System.currentTimeMillis() - Long.parseLong(timestamp) > 5 * 60 * 1000) {
+            return "无权限";
+        }
+        return "发送POST请求 JSON中你的名字是：" + user.getUsername();
     }
 
 

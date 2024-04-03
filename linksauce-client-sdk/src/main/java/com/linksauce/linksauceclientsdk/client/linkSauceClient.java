@@ -1,18 +1,15 @@
-package com.ohh.linksauceinterface.client;
+package com.linksauce.linksauceclientsdk.client;
 
 import cn.hutool.core.util.RandomUtil;
 import cn.hutool.http.HttpRequest;
 import cn.hutool.http.HttpResponse;
 import cn.hutool.http.HttpUtil;
 import cn.hutool.json.JSONUtil;
-import com.ohh.linksauceinterface.modal.User;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
+import com.linksauce.linksauceclientsdk.model.User;
+import com.linksauce.linksauceclientsdk.utils.SignUtils;
 
 import java.util.HashMap;
 import java.util.Map;
-
-import static com.ohh.linksauceinterface.utils.SignUtils.genSign;
 
 public class linkSauceClient {
 
@@ -33,7 +30,7 @@ public class linkSauceClient {
         return result;
     }
 
-    public String getNameByPost(@RequestParam String name) {
+    public String getNameByPost(String name) {
         // 可以单独传入http参数，这样参数会自动做URL编码，拼接在URL中
         HashMap<String, Object> paramMap = new HashMap<>();
         paramMap.put("name", name);
@@ -42,28 +39,29 @@ public class linkSauceClient {
         return result;
     }
 
-    private Map<String, String> getHeaderMap(String body) {
-        Map<String, String> hashMap = new HashMap<>();
-        hashMap.put("accessKey", accessKey);
-        // 不能直接发送
-        // hashMap.put("secretKey", secretKey);
-        hashMap.put("nonce", RandomUtil.randomNumbers(4));
-        hashMap.put("body", body);
-        hashMap.put("timestamp", String.valueOf(System.currentTimeMillis() / 1000));
-        hashMap.put("sign", genSign(body, secretKey));
-        return hashMap;
-    }
-
-    public String getUsernameByPost(@RequestBody User user) {
+    public String getNameByPostWithJson(User user) {
         String json = JSONUtil.toJsonStr(user);
-        HttpResponse httpResponse = HttpRequest.post("http://localhost:8123/api/name/user")
-                .addHeaders(getHeaderMap(json))
+        HttpResponse response = HttpRequest.post("http://localhost:8123/api/name/user")
+                .addHeaders(getHeaders(json))
                 .body(json)
                 .execute();
-        System.out.println(httpResponse.getStatus());
-        String result = httpResponse.body();
-        System.out.println(result);
-        return result;
+        System.out.println("response = " + response);
+        System.out.println("status = " + response.getStatus());
+        if (response.isOk()) {
+            return response.body();
+        }
+        return "fail";
+    }
+
+    private Map<String, String> getHeaders(String body) {
+        Map<String, String> header = new HashMap<>();
+        header.put("accessKey", accessKey);
+        header.put("sign", SignUtils.genSign(body, secretKey));
+        // 防止中文乱码
+        header.put("body", body);
+        header.put("nonce", RandomUtil.randomNumbers(5));
+        header.put("timestamp", String.valueOf(System.currentTimeMillis()));
+        return header;
     }
 
 }

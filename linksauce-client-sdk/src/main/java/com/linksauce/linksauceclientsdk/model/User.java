@@ -1,4 +1,4 @@
-package com.ohh.linksauceinterface.modal;
+package com.linksauce.linksauceclientsdk.model;
 
 import lombok.Data;
 
