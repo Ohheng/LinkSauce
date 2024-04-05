@@ -1,9 +1,11 @@
-import CreateModal from '@/pages/InterfaceInfo/components/CreateModal';
-import UpdateModal from '@/pages/InterfaceInfo/components/UpdateModal';
+import CreateModal from '@/pages/Admin/InterfaceInfo/components/CreateModal';
+import UpdateModal from '@/pages/Admin/InterfaceInfo/components/UpdateModal';
 import {
   addInterfaceInfoUsingPost,
   deleteInterfaceInfoUsingPost,
   listInterfaceInfoByPageUsingGet,
+  offlineInterfaceInfoUsingPost,
+  onlineInterfaceInfoUsingPost,
 } from '@/services/linksauce-backend/interfaceInfoController';
 import { PlusOutlined } from '@ant-design/icons';
 import type { ActionType, ProColumns, ProDescriptionsItemProps } from '@ant-design/pro-components';
@@ -105,6 +107,52 @@ const TableList: React.FC = () => {
   };
 
   /**
+   * 发布接口
+   * @param selectedRows
+   */
+  const handleOnline = async (record: API.IdRequest) => {
+    const hide = message.loading('发布中');
+    if (!record) return true;
+    try {
+      await onlineInterfaceInfoUsingPost({
+        id: record.id,
+      });
+      hide();
+      message.success('发布成功!');
+      // 刷新页面
+      actionRef.current?.reload();
+      return true;
+    } catch (error: any) {
+      hide();
+      message.error('发布失败!' + error.message);
+      return false;
+    }
+  };
+
+  /**
+   * 下线接口
+   * @param selectedRows
+   */
+  const handleOFFline = async (record: API.IdRequest) => {
+    const hide = message.loading('下线中');
+    if (!record) return true;
+    try {
+      await offlineInterfaceInfoUsingPost({
+        id: record.id,
+      });
+      hide();
+      message.success('下线成功!');
+      // 刷新页面
+      actionRef.current?.reload();
+      return true;
+    } catch (error: any) {
+      hide();
+      message.error('下线失败!' + error.message);
+      return false;
+    }
+  };
+
+  /**
    * @en-US International configuration
    * @zh-CN 国际化配置
    * */
@@ -193,14 +241,38 @@ const TableList: React.FC = () => {
         >
           修改
         </a>,
-        <a
+        record.status === 0 ? (
+          <a
+            key="config"
+            onClick={() => {
+              handleOnline(record);
+            }}
+          >
+            发布
+          </a>
+        ) : null,
+        record.status === 1 ? (
+          <Button
+            type="text"
+            danger
+            key="config"
+            onClick={() => {
+              handleOFFline(record);
+            }}
+          >
+            下线
+          </Button>
+        ) : null,
+        <Button
+          type="text"
+          danger
           key="delete"
           onClick={() => {
             handleRemoveInterfaceInfo(record);
           }}
         >
           删除
-        </a>,
+        </Button>,
       ],
     },
   ];

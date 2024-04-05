@@ -90,11 +90,15 @@ declare namespace API {
     id?: number;
   };
 
+  type IdRequest = {
+    id?: number;
+  };
+
   type InterfaceInfo = {
     createTime?: string;
     description?: string;
     id?: number;
-    isDeleted?: number;
+    isDelete?: number;
     method?: string;
     name?: string;
     requestHeader?: string;

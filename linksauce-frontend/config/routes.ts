@@ -7,7 +7,7 @@ export default [
     access: 'canAdmin',
     name: '管理员页面',
     routes: [
-      { icon: 'table', path: '/admin/interface_info', component: './InterfaceInfo', name: '接口管理' },
+      { icon: 'table', path: '/admin/interface_info', component: './Admin/InterfaceInfo', name: '接口管理' },
     ],
   },
 
