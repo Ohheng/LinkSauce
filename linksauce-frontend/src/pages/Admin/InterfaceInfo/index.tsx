@@ -6,6 +6,7 @@ import {
   listInterfaceInfoByPageUsingGet,
   offlineInterfaceInfoUsingPost,
   onlineInterfaceInfoUsingPost,
+  updateInterfaceInfoUsingPost,
 } from '@/services/linksauce-backend/interfaceInfoController';
 import { PlusOutlined } from '@ant-design/icons';
 import type { ActionType, ProColumns, ProDescriptionsItemProps } from '@ant-design/pro-components';
@@ -33,8 +34,8 @@ const TableList: React.FC = () => {
   const [updateModalOpen, handleUpdateModalOpen] = useState<boolean>(false);
   const [showDetail, setShowDetail] = useState<boolean>(false);
   const actionRef = useRef<ActionType>();
-  const [currentRow, setCurrentRow] = useState<API.RuleListItem>();
-  const [selectedRowsState, setSelectedRows] = useState<API.RuleListItem[]>([]);
+  const [currentRow, setCurrentRow] = useState<API.InterfaceInfo>();
+  const [selectedRowsState, setSelectedRows] = useState<API.InterfaceInfo[]>([]);
 
   /**
    * @en-US Add node
@@ -65,9 +66,15 @@ const TableList: React.FC = () => {
    * @param fields
    */
   const handleUpdateInterfaceInfo = async (updateValue: API.InterfaceInfoUpdateRequest) => {
+    if (!currentRow) {
+      return;
+    }
     const hide = message.loading('正在更新');
     try {
-      let res = await updateInterfaceInfoUsingPOST({ ...updateValue });
+      let res = await updateInterfaceInfoUsingPost({
+        id: currentRow.id,
+        ...updateValue,
+      });
       if (res.data) {
         hide();
         handleUpdateModalOpen(false);
@@ -184,6 +191,11 @@ const TableList: React.FC = () => {
       title: '请求方法',
       dataIndex: 'method',
       valueType: 'textarea',
+    },
+    {
+      title: '请求参数',
+      dataIndex: 'requestParams',
+      valueType: 'jsonCode',
     },
     {
       title: 'url',

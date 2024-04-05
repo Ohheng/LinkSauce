@@ -1,13 +1,16 @@
 package com.ohh.project.controller;
 
+import cn.hutool.json.JSONUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.google.gson.Gson;
 import com.linksauce.linksauceclientsdk.client.linkSauceClient;
 import com.ohh.project.annotation.AuthCheck;
 import com.ohh.project.common.*;
 import com.ohh.project.constant.CommonConstant;
 import com.ohh.project.exception.BusinessException;
 import com.ohh.project.model.dto.interfaceinfo.InterfaceInfoAddRequest;
+import com.ohh.project.model.dto.interfaceinfo.InterfaceInfoInvokeRequest;
 import com.ohh.project.model.dto.interfaceinfo.InterfaceInfoQueryRequest;
 import com.ohh.project.model.dto.interfaceinfo.InterfaceInfoUpdateRequest;
 import com.ohh.project.model.entity.InterfaceInfo;
@@ -22,7 +25,9 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.io.UnsupportedEncodingException;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 接口管理
@@ -259,4 +264,72 @@ public class InterfaceInfoController {
         boolean result = interfaceInfoService.updateById(interfaceInfo);
         return ResultUtils.success(result);
     }
+
+
+    /**
+     * 测试调用
+     *
+     * @param interfaceInfoInvokeRequest
+     * @param request
+     * @return
+     */
+    // @PostMapping("/invoke")
+    // public BaseResponse<Boolean> invokeInterface(@RequestBody InterfaceInfoInvokeRequest interfaceInfoInvokeRequest, HttpServletRequest request) {
+    //     if (interfaceInfoInvokeRequest == null || interfaceInfoInvokeRequest.getId() <= 0) {
+    //         throw new BusinessException(ErrorCode.PARAMS_ERROR);
+    //     }
+    //     long id = interfaceInfoInvokeRequest.getId();
+    //     String userRequestParams = interfaceInfoInvokeRequest.getUserRequestParams();
+    //     // 判断是否存在
+    //     InterfaceInfo oldInterfaceInfo = interfaceInfoService.getById(id);
+    //     if (oldInterfaceInfo == null) {
+    //         throw new BusinessException(ErrorCode.NOT_FOUND_ERROR);
+    //     }
+    //
+    //     if (oldInterfaceInfo.getStatus()==InterfaceInfoStatusEnum.OFFLINE.getValue()){
+    //         throw new BusinessException(ErrorCode.NOT_FOUND_ERROR,"接口已下线");
+    //     }
+    //
+    //     User user = userService.getLoginUser(request);
+    //     String accessKey = user.getAccessKey();
+    //     String secretKey = user.getSecretKey();
+    //     Gson gson = new Gson();
+    //     com.linksauce.linksauceclientsdk.model.User user = gson.fromJson(userRequestParams, com.linksauce.linksauceclientsdk.model.User.class);
+    //     linkSauceClient.getNameByPost(user);
+    //     boolean result = interfaceInfoService.updateById(interfaceInfo);
+    //     return ResultUtils.success(result);
+    // }
+
+    /**
+     * 在线调用接口
+     *
+     * @param interfaceInfoInvokeRequest 携带id、请求参数
+     * @return data
+     */
+    @PostMapping("/invoke")
+    public BaseResponse<Object> invokeInterface(@RequestBody InterfaceInfoInvokeRequest interfaceInfoInvokeRequest, HttpServletRequest request) throws UnsupportedEncodingException {
+        if (interfaceInfoInvokeRequest == null || interfaceInfoInvokeRequest.getId() < 0) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR);
+        }
+        // 判断接口是否存在
+        long id = interfaceInfoInvokeRequest.getId();
+        InterfaceInfo interfaceInfo = interfaceInfoService.getById(id);
+        if (interfaceInfo == null) {
+            throw new BusinessException(ErrorCode.NOT_FOUND_ERROR);
+        }
+        if (interfaceInfo.getStatus() != InterfaceInfoStatusEnum.ONLINE.getValue()) {
+            throw new BusinessException(ErrorCode.SYSTEM_ERROR, "接口未上线");
+        }
+        // 得到当前用户
+        User loginUser = userService.getLoginUser(request);
+        String accessKey = loginUser.getAccessKey();
+        String secretKey = loginUser.getSecretKey();
+        linkSauceClient client = new linkSauceClient(accessKey, secretKey);
+        // 先写死请求
+        String userRequestParams = interfaceInfoInvokeRequest.getUserRequestParams();
+        com.linksauce.linksauceclientsdk.model.User user = JSONUtil.toBean(userRequestParams, com.linksauce.linksauceclientsdk.model.User.class);
+        String result = client.getNameByPostWithJson(user);
+        return ResultUtils.success(result);
+    }
 }
+
