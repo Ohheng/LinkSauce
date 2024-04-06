@@ -130,8 +130,8 @@ const Login: React.FC = () => {
             maxWidth: '75vw',
           }}
           logo={<img alt="logo" src="/logo.svg" />}
-          title="Ant Design"
-          subTitle={'Ant Design 是西湖区最具影响力的 Web 设计规范'}
+          title="Link-Sauce"
+          subTitle={'智能连接·简化集成 - LinkSauce让您的API管理更高效！'}
           initialValues={{
             autoLogin: true,
           }}

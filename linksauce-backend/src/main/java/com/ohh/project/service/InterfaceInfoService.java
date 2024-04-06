@@ -11,6 +11,6 @@ import com.ohh.project.model.entity.Post;
 */
 public interface InterfaceInfoService extends IService<InterfaceInfo> {
 
-    void validInterfaceInfo(InterfaceInfo post, boolean add);
+    void validInterfaceInfo(InterfaceInfo interfaceInfo, boolean add);
 
 }

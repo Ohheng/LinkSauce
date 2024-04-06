@@ -48,8 +48,6 @@ public class InterfaceInfoController {
     @Resource
     private linkSauceClient linkSauceClient;
 
-    // region 增删改查
-
     /**
      * 创建
      *
@@ -200,8 +198,6 @@ public class InterfaceInfoController {
         return ResultUtils.success(interfaceInfoPage);
     }
 
-    // endregion
-
     /**
      * 发布
      *
@@ -264,41 +260,6 @@ public class InterfaceInfoController {
         boolean result = interfaceInfoService.updateById(interfaceInfo);
         return ResultUtils.success(result);
     }
-
-
-    /**
-     * 测试调用
-     *
-     * @param interfaceInfoInvokeRequest
-     * @param request
-     * @return
-     */
-    // @PostMapping("/invoke")
-    // public BaseResponse<Boolean> invokeInterface(@RequestBody InterfaceInfoInvokeRequest interfaceInfoInvokeRequest, HttpServletRequest request) {
-    //     if (interfaceInfoInvokeRequest == null || interfaceInfoInvokeRequest.getId() <= 0) {
-    //         throw new BusinessException(ErrorCode.PARAMS_ERROR);
-    //     }
-    //     long id = interfaceInfoInvokeRequest.getId();
-    //     String userRequestParams = interfaceInfoInvokeRequest.getUserRequestParams();
-    //     // 判断是否存在
-    //     InterfaceInfo oldInterfaceInfo = interfaceInfoService.getById(id);
-    //     if (oldInterfaceInfo == null) {
-    //         throw new BusinessException(ErrorCode.NOT_FOUND_ERROR);
-    //     }
-    //
-    //     if (oldInterfaceInfo.getStatus()==InterfaceInfoStatusEnum.OFFLINE.getValue()){
-    //         throw new BusinessException(ErrorCode.NOT_FOUND_ERROR,"接口已下线");
-    //     }
-    //
-    //     User user = userService.getLoginUser(request);
-    //     String accessKey = user.getAccessKey();
-    //     String secretKey = user.getSecretKey();
-    //     Gson gson = new Gson();
-    //     com.linksauce.linksauceclientsdk.model.User user = gson.fromJson(userRequestParams, com.linksauce.linksauceclientsdk.model.User.class);
-    //     linkSauceClient.getNameByPost(user);
-    //     boolean result = interfaceInfoService.updateById(interfaceInfo);
-    //     return ResultUtils.success(result);
-    // }
 
     /**
      * 在线调用接口

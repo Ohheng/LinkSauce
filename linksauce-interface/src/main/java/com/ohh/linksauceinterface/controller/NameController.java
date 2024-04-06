@@ -57,7 +57,11 @@ public class NameController {
         if (System.currentTimeMillis() - Long.parseLong(timestamp) > 5 * 60 * 1000) {
             return "无权限";
         }
-        return "发送POST请求 JSON中你的名字是：" + user.getUsername();
+        String result = "发送POST请求 JSON中你的名字是：" + user.getUsername();
+        // 调用成功，次数+1
+
+
+        return result;
     }
 
 
