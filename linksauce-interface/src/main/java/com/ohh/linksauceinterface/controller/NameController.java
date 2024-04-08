@@ -18,12 +18,12 @@ import java.nio.charset.StandardCharsets;
 @RequestMapping("/name")
 public class NameController {
 
-    @GetMapping("/")
+    @GetMapping("/get")
     public String getNameByGet(String name) {
         return "GET 你的名字是" + name;
     }
 
-    @PostMapping("/")
+    @PostMapping("/post")
     public String getNameByPost(@RequestParam String name) {
         return "POST 你的名字是" + name;
     }
@@ -58,8 +58,7 @@ public class NameController {
             return "无权限";
         }
         String result = "发送POST请求 JSON中你的名字是：" + user.getUsername();
-        // 调用成功，次数+1
-
+        // TODO 调用成功，次数+1
 
         return result;
     }
