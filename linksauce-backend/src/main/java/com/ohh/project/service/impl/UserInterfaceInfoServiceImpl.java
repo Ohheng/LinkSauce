@@ -3,10 +3,11 @@ package com.ohh.project.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.ohh.linksaucecommon.model.entity.UserInterfaceInfo;
 import com.ohh.project.common.ErrorCode;
 import com.ohh.project.exception.BusinessException;
 import com.ohh.project.mapper.UserInterfaceInfoMapper;
-import com.ohh.project.model.entity.UserInterfaceInfo;
+
 import com.ohh.project.service.UserInterfaceInfoService;
 import org.springframework.stereotype.Service;
 

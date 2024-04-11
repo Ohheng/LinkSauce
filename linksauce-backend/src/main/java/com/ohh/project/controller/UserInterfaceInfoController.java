@@ -2,6 +2,8 @@ package com.ohh.project.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.ohh.linksaucecommon.model.entity.User;
+import com.ohh.linksaucecommon.model.entity.UserInterfaceInfo;
 import com.ohh.project.annotation.AuthCheck;
 import com.ohh.project.common.BaseResponse;
 import com.ohh.project.common.DeleteRequest;
@@ -13,8 +15,6 @@ import com.ohh.project.exception.BusinessException;
 import com.ohh.project.model.dto.userInterfaceInfo.UserInterfaceInfoAddRequest;
 import com.ohh.project.model.dto.userInterfaceInfo.UserInterfaceInfoQueryRequest;
 import com.ohh.project.model.dto.userInterfaceInfo.UserInterfaceInfoUpdateRequest;
-import com.ohh.project.model.entity.User;
-import com.ohh.project.model.entity.UserInterfaceInfo;
 import com.ohh.project.service.UserInterfaceInfoService;
 import com.ohh.project.service.UserService;
 import lombok.extern.slf4j.Slf4j;

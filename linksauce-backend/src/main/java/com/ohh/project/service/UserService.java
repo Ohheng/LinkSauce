@@ -1,10 +1,9 @@
 package com.ohh.project.service;
 
+import javax.servlet.http.HttpServletRequest;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.ohh.project.model.entity.User;
-
-import javax.servlet.http.HttpServletRequest;
+import com.ohh.linksaucecommon.model.entity.User;
 
 /**
  * 用户服务

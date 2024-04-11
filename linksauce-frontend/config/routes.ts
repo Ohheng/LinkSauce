@@ -25,6 +25,12 @@ export default [
         component: './Admin/InterfaceInfo',
         name: '接口管理',
       },
+      {
+        icon: 'analysis',
+        path: '/admin/interface_analysis',
+        component: './Admin/InterfaceAnalysis',
+        name: '接口分析',
+      },
     ],
   },
 

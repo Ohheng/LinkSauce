@@ -1,8 +1,10 @@
 package com.ohh.project.mapper;
 
-
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.ohh.project.model.entity.UserInterfaceInfo;
+import com.ohh.linksaucecommon.model.entity.UserInterfaceInfo;
+import com.ohh.project.model.vo.InterfaceInfoVO;
+
+import java.util.List;
 
 /**
 * @author 12994
@@ -11,7 +13,7 @@ import com.ohh.project.model.entity.UserInterfaceInfo;
 * @Entity generator.domain.UserInterfaceInfo
 */
 public interface UserInterfaceInfoMapper extends BaseMapper<UserInterfaceInfo> {
-
+    List<InterfaceInfoVO> listTopInvokeInterfaceInfo(int limit);
 }
 
 

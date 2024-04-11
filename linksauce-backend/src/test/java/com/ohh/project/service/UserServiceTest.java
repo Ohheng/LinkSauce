@@ -1,6 +1,6 @@
 package com.ohh.project.service;
 
-import com.ohh.project.model.entity.User;
+import com.ohh.linksaucecommon.model.entity.User;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

@@ -2,7 +2,7 @@ package com.ohh.project.service;
 
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.ohh.project.model.entity.UserInterfaceInfo;
+import com.ohh.linksaucecommon.model.entity.UserInterfaceInfo;
 
 /**
 * @author 12994

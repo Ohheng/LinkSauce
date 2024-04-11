@@ -1,8 +1,7 @@
 package com.ohh.project.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.ohh.project.model.entity.InterfaceInfo;
-import com.ohh.project.model.entity.Post;
+import com.ohh.linksaucecommon.model.entity.InterfaceInfo;
 
 /**
 * @author 12994

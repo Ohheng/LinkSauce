@@ -1,12 +1,11 @@
 package com.ohh.project.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.ohh.linksaucecommon.model.entity.InterfaceInfo;
 import com.ohh.project.common.ErrorCode;
 import com.ohh.project.exception.BusinessException;
 import com.ohh.project.mapper.InterfaceInfoMapper;
-import com.ohh.project.model.entity.InterfaceInfo;
 import com.ohh.project.service.InterfaceInfoService;
-import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 

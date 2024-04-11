@@ -3,8 +3,9 @@ package com.ohh.project.controller;
 import cn.hutool.json.JSONUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.google.gson.Gson;
 import com.linksauce.linksauceclientsdk.client.linkSauceClient;
+import com.ohh.linksaucecommon.model.entity.InterfaceInfo;
+import com.ohh.linksaucecommon.model.entity.User;
 import com.ohh.project.annotation.AuthCheck;
 import com.ohh.project.common.*;
 import com.ohh.project.constant.CommonConstant;
@@ -13,8 +14,6 @@ import com.ohh.project.model.dto.interfaceinfo.InterfaceInfoAddRequest;
 import com.ohh.project.model.dto.interfaceinfo.InterfaceInfoInvokeRequest;
 import com.ohh.project.model.dto.interfaceinfo.InterfaceInfoQueryRequest;
 import com.ohh.project.model.dto.interfaceinfo.InterfaceInfoUpdateRequest;
-import com.ohh.project.model.entity.InterfaceInfo;
-import com.ohh.project.model.entity.User;
 import com.ohh.project.model.enums.InterfaceInfoStatusEnum;
 import com.ohh.project.service.InterfaceInfoService;
 import com.ohh.project.service.UserService;
@@ -27,7 +26,6 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
-import java.util.Map;
 
 /**
  * 接口管理

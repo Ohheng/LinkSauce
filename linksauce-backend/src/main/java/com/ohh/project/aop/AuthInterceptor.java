@@ -1,10 +1,10 @@
 package com.ohh.project.aop;
 
 import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
+import com.ohh.linksaucecommon.model.entity.User;
 import com.ohh.project.annotation.AuthCheck;
 import com.ohh.project.common.ErrorCode;
 import com.ohh.project.exception.BusinessException;
-import com.ohh.project.model.entity.User;
 import com.ohh.project.service.UserService;
 import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
