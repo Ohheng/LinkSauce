@@ -1,4 +1,4 @@
-package com.ohh.linksauceapibackend.model.dto;
+package com.ohh.linksauceapibackend.model.dto.user;
 
 import lombok.Data;
 

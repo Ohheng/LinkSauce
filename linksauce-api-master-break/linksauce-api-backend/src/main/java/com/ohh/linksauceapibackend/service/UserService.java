@@ -1,9 +1,7 @@
 package com.ohh.linksauceapibackend.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.ohh.linksauceapibackend.model.dto.UserBindEmailRequest;
-import com.ohh.linksauceapibackend.model.dto.UserEmailLoginRequest;
-import com.ohh.linksauceapibackend.model.dto.UserRegisterRequest;
+import com.ohh.linksauceapibackend.model.dto.user.*;
 import com.ohh.linksauceapibackend.model.entity.User;
 import com.ohh.linksauceapibackend.model.vo.UserVO;
 
@@ -31,6 +29,14 @@ public interface UserService extends IService<User> {
      * @return
      */
     boolean addWalletBalance(Long userId, Integer addPoints);
+
+    /**
+     * 减少钱包余额
+     * @param userId
+     * @param reduceScore
+     * @return
+     */
+    boolean reduceWalletBalance(Long userId, Integer reduceScore);
 
     /**
      * 用户登录
@@ -64,4 +70,56 @@ public interface UserService extends IService<User> {
      * @return
      */
     UserVO getLoginUser(HttpServletRequest request);
+
+    /**
+     * 用户邮箱注册
+     * @param userEmailRegisterRequest
+     * @return
+     */
+    long userEmailRegister(UserEmailRegisterRequest userEmailRegisterRequest);
+
+    /**
+     * 是否为管理员
+     *
+     * @param request 请求
+     * @return boolean
+     */
+    boolean isAdmin(HttpServletRequest request);
+
+    /**
+     * 是游客
+     *
+     * @param request 要求
+     * @return
+     */
+    User isTourist(HttpServletRequest request);
+
+    /**
+     * 用户注销
+     * @param request
+     * @return
+     */
+    boolean userLogout(HttpServletRequest request);
+
+    /**
+     * 校验用户
+     * @param user
+     * @param add
+     */
+    void validUser(User user, boolean add);
+
+    /**
+     * 更新凭证
+     * @param loginUser
+     * @return
+     */
+    UserVO updateVoucher(User loginUser);
+
+    /**
+     * 用户取消绑定电子邮件
+     * @param userUnBindEmailRequest
+     * @param request
+     * @return
+     */
+    UserVO userUnBindEmail(UserUnBindEmailRequest userUnBindEmailRequest, HttpServletRequest request);
 }

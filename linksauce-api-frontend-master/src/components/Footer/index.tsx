@@ -21,7 +21,7 @@ const Footer: React.FC = () => {
         <a target={'_blank'} href={'https://www.beian.gov.cn/portal/registerSystemInfo?recordcode=41172702000163'}
            rel="noreferrer">
           <img src="https://img.qimuu.icu/typory/%E5%A4%87%E6%A1%88%E5%9B%BE%E6%A0%87.png"
-               alt={'豫公网安备 41172702000163号'}/> 豫公网安备 41172702000163号
+               alt={'豫公网安备 41172702000163号'}/> 粤公网安备44040402000235号
         </a>
 
       </>}

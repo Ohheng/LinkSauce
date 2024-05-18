@@ -20,17 +20,18 @@ spring:
     port: 6379
     host: localhost
     database: 0
-#  邮箱配置 todo 修改为自己的邮箱发送配置 password为邮箱授权码
+#  邮箱配置
   mail:
     host: smtp.qq.com
-    username: 2483482026@qq.com
-    password: 邮箱授权码
-    emailFrom: 2483482026@qq.com
+    username: 1299410261@qq.com
+    password: sltlkyztlsayheaa
+    emailFrom: 1299410261@qq.com
     properties:
       mail:
         smtp:
           ssl:
             enable: true
+    port: 465
 server:
   port: 7529
   address: 0.0.0.0
